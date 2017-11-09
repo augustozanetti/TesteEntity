@@ -1,11 +1,7 @@
 ﻿using EntityTeste.Domain;
 using EntityTeste.Mappings;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace EntityTeste.DataContext
 {
@@ -14,7 +10,8 @@ namespace EntityTeste.DataContext
         public DataContext()
             : base("StringConnection")
         {
-            Database.SetInitializer<DataContext>(new Initializer());
+            //Database.SetInitializer<DataContext>(new Initializer());
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<Produto> Produtos { get; set; }
@@ -22,6 +19,8 @@ namespace EntityTeste.DataContext
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Configurations.Add(new ProdutoMap());
             modelBuilder.Configurations.Add(new CategoriaMap());
 
@@ -29,11 +28,25 @@ namespace EntityTeste.DataContext
         }
     }
 
-    public class Initializer : DropCreateDatabaseAlways<DataContext>
-    {
-        protected override void Seed(DataContext context)
-        {
+    //public class Initializer : DropCreateDatabaseAlways<DataContext>
+    //{
+    //    protected override void Seed(DataContext context)
+    //    {
+    //        var categoria = new Categoria
+    //        {
+    //            Descricao = "Categoria 1"
+    //        };
+
+    //        context.Categorias.Add(categoria);
+
+    //        context.Produtos.Add(new Produto
+    //        {
+    //            Titulo = "Titulo 1",
+    //            CategoriaId = categoria.Id
+    //        });
+
+    //        context.SaveChanges();
             
-        }
-    }
+    //    }
+    //}
 }

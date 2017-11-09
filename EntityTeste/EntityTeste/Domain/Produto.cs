@@ -12,6 +12,8 @@ namespace EntityTeste.Domain
 
         public string Titulo { get; set; }
 
+        public string Nome { get; set; }
+
         public Guid CategoriaId { get; set; }
 
         public virtual Categoria Categoria { get; set; }

@@ -13,6 +13,10 @@ namespace EntityTeste.Mappings
             Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
+            Property(x => x.Nome)
+                .IsRequired()
+                .HasMaxLength(60);
+
             Property(x => x.Titulo)
                 .IsRequired()
                 .HasMaxLength(60);
